@@ -1,7 +1,10 @@
 console.log("Starting");
 
-//TODO Change Method for detect articles continually
-window.setTimeout(setButtons, 10000); // for now, waiting for 5 seconds at beginning
+//window.setTimeout(setButtons, 10000); // for now, waiting for 10 seconds at beginning
+if(window.location.hostname=="twitter.com"){
+  const myInterval = setInterval(setButtons, 1000);
+}
+
 
 let divClassLists = [
   "css-1dbjc4n r-18u37iz r-1h0z5md",
@@ -16,36 +19,42 @@ function setButtons(){
   articles = document.getElementsByTagName("article");
 
   for(var j=0;j<articles.length;j++){
-    let idList = articles[j].attributes[0].textContent.split(" ");
-    console.log(document.getElementById(idList[7]));
-    let link = document.getElementById(idList[7]).attributes[0].textContent;
+    if(typeof articles[j].attributes["setButton"] === 'undefined'){
+      //console.log(articles[j]);
+      let idList = articles[j].attributes[0].textContent.split(" ");
+      //console.log(document.getElementById(idList[7]));
+      var link = window.location.pathname;
+      if(document.getElementById(idList[7]) !== null){
+        link = document.getElementById(idList[7]).attributes[0].textContent;
+      }
 
-    const nodes = [];
-    for(var i=0;i<5;i++){
-      nodes[i] = document.createElement("div");
-      nodes[i].className = divClassLists[i];
+      const nodes = [];
+      for(var i=0;i<5;i++){
+        nodes[i] = document.createElement("div");
+        nodes[i].className = divClassLists[i];
+      }
+
+      nodes[1].setAttribute("dir","ltr");
+      nodes[0].setAttribute("aria-label","Tweet Collections");
+      nodes[0].setAttribute("role", "button");
+      nodes[0].setAttribute("tabindex", "0");
+      nodes[0].setAttribute("data-testid", "collect");
+      //nodes[4].appendChild(bookmarkSVG.trim());
+    
+      renderLinkIcon(nodes[4]);
+
+      for(var i=4;i>0;i--){
+        nodes[i-1].appendChild(nodes[i]);
+      }
+      nodes[0].classList.add("collect-buttons");
+      nodes[0].setAttribute("link", link);
+      nodes[0].addEventListener('click', collect, false);
+      //var buttonBar = articles[j].closest(".r-1ta3fxp");
+      var buttonBar = document.getElementsByClassName("r-1ta3fxp")[j];
+      buttonBar.appendChild(nodes[0]);
+      //document.getElementById(idList[14]).appendChild(nodes[0]);
+      articles[j].setAttribute("setButton", 1);
     }
-
-    nodes[1].setAttribute("dir","ltr");
-    nodes[0].setAttribute("aria-label","Tweet Collections");
-    nodes[0].setAttribute("role", "button");
-    nodes[0].setAttribute("tabindex", "0");
-    nodes[0].setAttribute("data-testid", "collect");
-    //nodes[4].appendChild(bookmarkSVG.trim());
-  
-    renderLinkIcon(nodes[4]);
-
-    for(var i=4;i>0;i--){
-      nodes[i-1].appendChild(nodes[i]);
-    }
-    nodes[0].classList.add("collect-buttons");
-    nodes[0].setAttribute("link", link);
-    nodes[0].addEventListener('click', collect, false);
-    console.log(nodes[0]);
-    //var buttonBar = articles[j].closest(".r-1ta3fxp");
-    var buttonBar = document.getElementsByClassName("r-1ta3fxp")[j];
-    buttonBar.appendChild(nodes[0]);
-    //document.getElementById(idList[14]).appendChild(nodes[0]);
   }
 }
 

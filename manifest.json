@@ -16,7 +16,7 @@
       "matches": [
         "<all_urls>"
       ], 
-      "js": ["jquery-1.11.1.min.js", "background.js"]
+      "js": ["jquery-3.6.0.min.js", "background.js"]
     }
   ],
   "browser_action": {
