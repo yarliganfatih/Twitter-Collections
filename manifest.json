@@ -16,7 +16,8 @@
       "matches": [
         "<all_urls>"
       ], 
-      "js": ["jquery-3.6.0.min.js", "background.js"]
+      "css": ["css/bootstrap.min.css"],
+      "js": ["js/jquery-3.6.0.min.js", "js/bootstrap.bundle.min.js", "background.js"]
     }
   ],
   "browser_action": {

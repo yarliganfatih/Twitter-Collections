@@ -1,10 +1,15 @@
-console.log("Starting");
+console.log("Starting Twitter Collections Extension");
 
-//window.setTimeout(setButtons, 10000); // for now, waiting for 10 seconds at beginning
-if(window.location.hostname=="twitter.com"){
-  const myInterval = setInterval(setButtons, 1000);
-}
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
 
+var lastScrollHeight = document.body.scrollHeight;
+window.addEventListener("scroll", () => {
+    if(lastScrollHeight != document.body.scrollHeight){
+        setButtons();
+    }
+});
 
 let divClassLists = [
   "css-1dbjc4n r-18u37iz r-1h0z5md",
